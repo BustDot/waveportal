@@ -8,6 +8,7 @@ const App = () => {
   const contractAddress = "0x513CF0fb705EFdaA76bE34F0AB4BA4bf2A638ffa";
   const contractABI = abi.abi;
   const [allWaves, setAllWaves] = useState([]);
+  const [msg, setMessage] = useState("");
 
   const checkIfWalletIsConnected = async () => {
     try {
@@ -109,7 +110,7 @@ const App = () => {
         /*
         * Execute the actual wave from your smart contract
         */
-        const waveTxn = await wavePortalContract.wave("this is a message");
+        const waveTxn = await wavePortalContract.wave(msg);
         console.log("Mining...", waveTxn.hash);
 
         await waveTxn.wait();
@@ -138,9 +139,18 @@ const App = () => {
         </div>
 
         <div className="bio">
-          hello world!
+          Click below to give me a <strong>wave</strong> and send me a <strong>message</strong>. Be careful what you write though, as your message will be recorded <strong>forever</strong> on the chain!
         </div>
-
+        <div id="message-box">
+          <input
+            id="message"
+            type="text"
+            required
+            placeholder="Enter your message here"
+            class="input-box"
+            onChange={(e) => setMessage(e.target.value)}
+          />
+        </div>
         <button className="waveButton" onClick={wave}>
           Wave at Me
         </button>
